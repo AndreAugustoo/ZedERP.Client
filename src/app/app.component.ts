@@ -1,15 +1,21 @@
+import { initFlowbite } from 'flowbite';
+import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { initFlowbite } from 'flowbite';
-import { ContentComponent } from './content/content.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { NavbarComponent } from './Components/navbar/navbar.component';
+import { SidebarComponent } from './Components/sidebar/sidebar.component';
+import { ContentComponent } from './Components/content/content.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, CommonModule, NavbarComponent, ContentComponent],
+  imports: [
+    RouterOutlet,
+    SidebarComponent,
+    CommonModule,
+    NavbarComponent,
+    ContentComponent
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
