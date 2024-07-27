@@ -3,7 +3,7 @@ export interface IContent{
     name: string;
     groupId: number | null;
     unitId: number;
-    salesPrice: number;
+    salePrice: number;
     stock: number | null;
     image: string | null;
 }
