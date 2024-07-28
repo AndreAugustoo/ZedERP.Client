@@ -1,4 +1,4 @@
-export interface IContent{
+export interface IProduct{
     code: string;
     name: string;
     groupId: number | null;

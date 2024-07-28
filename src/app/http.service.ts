@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { IContent } from './features/product/interfaces/content';
+import { IProduct } from './features/product/interfaces/product';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,10 @@ export class HttpService {
   constructor() { }
 
   getAllProduct(){
-    return this.http.get<IContent[]>(this.apiUrl + "/api/Products");
+    return this.http.get<IProduct[]>(this.apiUrl + "/api/Products");
+  }
+
+  createProduct(product:IProduct){
+    return this.http.post(this.apiUrl + "/api/Products", product);
   }
 }
