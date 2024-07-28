@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [FooterComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })

@@ -1,13 +1,9 @@
 import { Routes } from '@angular/router';
-import { ContentComponent } from './Components/content/content.component';
+import { ProductListComponent } from './features/product/components/product-list/product-list.component';
 
 export const routes: Routes = [
     {
-        path:"",
-        component:ContentComponent
-    },
-    {
-        path:"content",
-        component:ContentComponent
+        path:"product-list",
+        component:ProductListComponent
     }
 ];

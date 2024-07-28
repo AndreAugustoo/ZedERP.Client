@@ -1,17 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { HttpService } from '../../http.service';
-import { IContent } from '../../Interfaces/content';
-import { FooterComponent } from '../footer/footer.component';
+import { HttpService } from '../../../../http.service';
+import { IContent } from '../../interfaces/content';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from '../../../../core/components/footer/footer.component';
 
 @Component({
-  selector: 'app-content',
+  selector: 'app-product-list',
   standalone: true,
   imports: [FooterComponent, CommonModule],
-  templateUrl: './content.component.html',
-  styleUrl: './content.component.css'
+  templateUrl: './product-list.component.html',
+  styleUrl: './product-list.component.css'
 })
-export class ContentComponent {
+export class ProductListComponent {
   contentList: IContent[]=[];
   httpService = inject(HttpService);
 

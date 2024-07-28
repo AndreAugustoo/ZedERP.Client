@@ -2,20 +2,22 @@ import { initFlowbite } from 'flowbite';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from './Components/navbar/navbar.component';
-import { SidebarComponent } from './Components/sidebar/sidebar.component';
-import { ContentComponent } from './Components/content/content.component';
+import { SidebarComponent } from './core/components/sidebar/sidebar.component';
+import { FooterComponent } from './core/components/footer/footer.component';
+import { ContentComponent } from './core/components/content/content.component';
+import { NavbarComponent } from './core/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
-    SidebarComponent,
     CommonModule,
     NavbarComponent,
+    SidebarComponent,
+    FooterComponent,
     ContentComponent
-  ],
+],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
