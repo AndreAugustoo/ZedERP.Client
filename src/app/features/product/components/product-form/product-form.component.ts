@@ -2,11 +2,13 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpService } from '../../../../http.service';
 import { IProduct } from '../../interfaces/product';
+import { NgIf } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, NgIf],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.css'
 })
@@ -14,22 +16,16 @@ import { IProduct } from '../../interfaces/product';
 export class ProductFormComponent {
   httpService = inject(HttpService);
   formBuilder = inject(FormBuilder);
+  route = inject(ActivatedRoute);
   productForm = this.formBuilder.group({
     code:['',[Validators.required]],
     name:['',[Validators.required]],
-    groupId:[0,[]],
+    groupId:[null,[]],
     unitId:[0,[Validators.required]],
-    salePrice:[0,[Validators.required]],
+    salePrice:[,[Validators.required]],
     stock:[0,[]],
     image:['',[]],
   });
-
-  closeModal() {
-    const modal = document.getElementById('product-form-modal');
-    if (modal) {
-      modal.classList.add('hidden');
-    }
-  }
 
   showToast() {
     const toast = document.getElementById('toast-success');
@@ -38,10 +34,15 @@ export class ProductFormComponent {
       // Esconder o toast após alguns segundos
       setTimeout(() => {
         toast.classList.add('hidden');
-      }, 3000);
+      }, 4000);
     }
   }
   
+  productCode!:string;
+  ngOnInit(){
+    this.productCode = this.route.snapshot.params['code'];
+  }
+
   save(){
     const product : IProduct = {
       code: this.productForm.value.code!,
@@ -54,11 +55,6 @@ export class ProductFormComponent {
     }
     this.httpService.createProduct(product).subscribe(() => {
       this.productForm.reset();
-
-      // Fechar o modal
-      this.closeModal();
-
-      // Mostrar toast de sucesso
       this.showToast();
     });
   }

@@ -28,7 +28,7 @@
                 <td class="px-6 py-4 text-right">{{ item.salePrice | currency:'BRL':'symbol' }}</td>
                 <td class="px-6 py-4 text-right">{{ item.stock }}</td>
                 <td class="px-6 py-4 text-right">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                  <button (click)="edit(item.code)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
                 </td>
               </tr>
             }
