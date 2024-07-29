@@ -21,12 +21,13 @@ import { Router } from '@angular/router';
 })
 export class ProductListComponent {
   router = inject(Router)
-  contentList: IProduct[]=[];
+  productList: IProduct[]=[];
   httpService = inject(HttpService);
 
   ngOnInit(){
     this.httpService.getAllProduct().subscribe(result => {
-      this.contentList = result;
+      this.productList = result;
+      console.log(result);
     });
   }
 

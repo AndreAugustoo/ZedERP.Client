@@ -21,7 +21,7 @@ export class ProductFormComponent {
     code:['',[Validators.required]],
     name:['',[Validators.required]],
     groupId:[null,[]],
-    unitId:[0,[Validators.required]],
+    unitId:[null,[Validators.required]],
     salePrice:[,[Validators.required]],
     stock:[0,[]],
     image:['',[]],
@@ -47,8 +47,8 @@ export class ProductFormComponent {
     const product : IProduct = {
       code: this.productForm.value.code!,
       name: this.productForm.value.name!,
-      groupId: this.productForm.value.groupId!,
-      unitId: this.productForm.value.unitId!,
+      group: this.productForm.value.groupId!,
+      unit: this.productForm.value.unitId!,
       salePrice: this.productForm.value.salePrice!,
       stock: this.productForm.value.stock!,
       image: this.productForm.value.image!

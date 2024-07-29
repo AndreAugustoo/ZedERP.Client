@@ -1,30 +1,33 @@
 <div class="rounded-lg dark:border-gray-700">
-    <div class="flex justify-end">
-      <button data-modal-target="product-form-modal" data-modal-toggle="product-form-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Adicionar</button>
-    </div>
+    
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <caption class="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+          <div class="flex justify-end">
+            <button data-modal-target="product-form-modal" data-modal-toggle="product-form-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Adicionar</button>
+          </div>
+      </caption>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-200">
           <tr>
             <th scope="col" class="px-6 py-3">Código</th>
             <th scope="col" class="px-6 py-3">Nome</th>
             <th scope="col" class="px-6 py-3">Grupo</th>
-            <th scope="col" class="px-6 py-3">Unidade</th>
-            <th scope="col" class="px-6 py-3">Preço de venda</th>
-            <th scope="col" class="px-6 py-3">Estoque</th>
+            <th scope="col" class="px-6 py-3 text-center">Unidade</th>
+            <th scope="col" class="px-6 py-3 text-right">Preço de venda</th>
+            <th scope="col" class="px-6 py-3 text-right">Estoque</th>
             <th scope="col" class="px-6 py-3"><span class="sr-only">Editar</span></th>
           </tr>
         </thead>
         <tbody>
-          @if (contentList.length > 0) {
-            @for (item of contentList; track item.code) {
+          @if (productList.length > 0) {
+            @for (item of productList; track item.code) {
               <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ item.code }}
                 </th>
                 <td class="px-6 py-4">{{ item.name }}</td>
-                <td class="px-6 py-4">{{ item.groupId }}</td>
-                <td class="px-6 py-4">{{ item.unitId }}</td>
+                <td class="px-6 py-4">{{ item.group?.name || '' }}</td>
+                <td class="px-6 py-4 text-center">{{ item.unit.unitSymbol }}</td>
                 <td class="px-6 py-4 text-right">{{ item.salePrice | currency:'BRL':'symbol' }}</td>
                 <td class="px-6 py-4 text-right">{{ item.stock }}</td>
                 <td class="px-6 py-4 text-right">
