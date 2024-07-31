@@ -28,10 +28,10 @@
                 <td class="px-6 py-4">{{ item.name }}</td>
                 <td class="px-6 py-4">{{ item.group?.name || '' }}</td>
                 <td class="px-6 py-4 text-center">{{ item.unit.unitSymbol }}</td>
-                <td class="px-6 py-4 text-right">{{ item.salePrice | currency:'BRL':'symbol' }}</td>
+                <td class="px-6 py-4 text-right">{{ item.salePrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
                 <td class="px-6 py-4 text-right">{{ item.stock }}</td>
                 <td class="px-6 py-4 text-right">
-                  <button (click)="edit(item.code)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
+                  <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
                 </td>
               </tr>
             }
@@ -44,4 +44,4 @@
 </div>
 
 <app-toast-success></app-toast-success>
-<app-product-form></app-product-form>
+<app-product-form (productAdded)="onProductAdded()"></app-product-form>

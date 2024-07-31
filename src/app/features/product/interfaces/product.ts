@@ -1,11 +1,23 @@
 export interface IProduct{
+    id?: number;
     code: string;
     name: string;
-    group: IGroup;
+    group?: IGroup;
     unit: IUnit;
     salePrice: number;
-    stock: number | null;
-    image: string | null;
+    stock?: number | null;
+    image?: string | null;
+}
+
+export interface AddProductDto{
+    id?: number;
+    code: string;
+    name: string;
+    groupId?: number | null;
+    unitId: number;
+    salePrice: number;
+    stock?: number | null;
+    image?: string | null;
 }
 
 export interface IGroup{
@@ -18,3 +30,5 @@ export interface IUnit{
     unitSymbol: string;
     description: string;
 }
+
+export interface UpdateProductDto extends AddProductDto {}

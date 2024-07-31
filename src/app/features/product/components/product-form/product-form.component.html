@@ -17,23 +17,47 @@
               </div>
               <!-- Modal body -->
               <form [formGroup]="productForm" (ngSubmit)="save()" class="p-4 md:p-5">
-                  <div class="grid gap-4 mb-4 grid-cols-2">
+                <div class="grid gap-4 mb-4 grid-cols-2">
                     <div class="col-span-2">
-                        <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Código*</label>
-                        <input type="text" name="code" id="code" formControlName="code" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Código do produto" required="">
+                      <label for="code" [ngClass]="{ 'text-red-700 dark:text-red-500': productForm.get('code')?.invalid && productForm.get('code')?.touched, 'text-gray-900 dark:text-white': !productForm.get('code')?.invalid || !productForm.get('code')?.touched }" class="block mb-2 text-sm font-medium">
+                        Código*
+                      </label>
+                      <input 
+                        type="text" 
+                        id="code"
+                        name="code" 
+                        formControlName="code" 
+                        [ngClass]="{
+                          'bg-gray-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500': productForm.get('code')?.invalid && productForm.get('code')?.touched,
+                          'bg-gray-50 border border-gray-300 text-gray-900 focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500': !productForm.get('code')?.invalid || !productForm.get('code')?.touched
+                        }"
+                        class="text-sm rounded-lg block w-full p-2.5"
+                        placeholder="Código do produto">
+                    </div>          
+                    <div class="col-span-2">
+                        <label for="name" [ngClass]="{ 'text-red-700 dark:text-red-500': productForm.get('name')?.invalid && productForm.get('name')?.touched, 'text-gray-900 dark:text-white': !productForm.get('name')?.invalid || !productForm.get('name')?.touched }" class="block mb-2 text-sm font-medium">
+                            Descrição*
+                          </label>
+                          <input 
+                            type="text" 
+                            id="name"
+                            name="name" 
+                            formControlName="name" 
+                            [ngClass]="{
+                              'bg-gray-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500': productForm.get('name')?.invalid && productForm.get('name')?.touched,
+                              'bg-gray-50 border border-gray-300 text-gray-900 focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500': !productForm.get('name')?.invalid || !productForm.get('name')?.touched
+                            }"
+                            class="text-sm rounded-lg block w-full p-2.5"
+                            placeholder="Nome">
                     </div>
-                      <div class="col-span-2">
-                          <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome*</label>
-                          <input type="text" name="name" id="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nome do produto" required="">
-                      </div>
-                      <div class="col-span-2 sm:col-span-1">
-                          <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preço de venda*</label>
-                          <input type="number" name="price" id="price" formControlName="salePrice" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="R$ 2999,99" required="">
-                      </div>
-                      <div class="col-span-2 sm:col-span-1">
+                    <div class="col-span-2 sm:col-span-1">
+                        <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preço de venda*</label>
+                        <input type="number" name="price" id="price" formControlName="salePrice" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="R$ 2999,99">
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
                         <label for="unit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Unidade de medida*</label>
-                        <select id="unit" formControlName="unit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
-                            <option selected="" aria-placeholder="Selecionar..."></option>
+                        <select id="unit" formControlName="unitId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option value="" disabled selected></option>
                             <option value="1">Unidade</option>
                             <option value="2">Caixa</option>
                             <option value="3">Quilograma</option>
@@ -42,16 +66,16 @@
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="stock" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Qtde. Estoque</label>
-                        <input type="number" name="stock" id="stock" formControlName="stock" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="0" required="">
+                        <input type="number" name="stock" id="stock" formControlName="stock" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="0">
                     </div>
                       <div class="col-span-2 sm:col-span-1">
                           <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grupo</label>
-                          <select id="category" formControlName="group" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                              <option selected="" aria-placeholder="Selecionar..."></option>
-                              <option value="1">TV/Monitors</option>
-                              <option value="2">PC</option>
-                              <option value="3">Gaming/Console</option>
-                              <option value="4">Phones</option>
+                          <select id="category" formControlName="groupId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="" disabled selected></option>
+                                <option value="1">TV/Monitors</option>
+                                <option value="2">PC</option>
+                                <option value="3">Gaming/Console</option>
+                                <option value="4">Phones</option>
                           </select>
                       </div>
                       <div class="col-span-2">
@@ -59,9 +83,8 @@
                           <textarea id="description" rows="4" formControlName="image" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="(Opcional) escreva a observação do produto aqui..."></textarea>                    
                       </div>
                   </div>
-                <button type="submit" 
-                    [disabled]="!productForm.valid" 
-                    class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-none">
+                <button type="submit"
+                    class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
                     </svg>

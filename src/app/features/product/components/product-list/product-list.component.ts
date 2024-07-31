@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
-import { HttpService } from '../../../../http.service';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { IProduct } from '../../interfaces/product';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../../../core/components/footer/footer.component';
 import { ProductFormComponent } from '../product-form/product-form.component';
 import { ToastSuccessComponent } from "../../../../core/components/toast-success/toast-success.component";
 import { Router } from '@angular/router';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -19,20 +19,27 @@ import { Router } from '@angular/router';
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })
+
 export class ProductListComponent {
   router = inject(Router)
   productList: IProduct[]=[];
-  httpService = inject(HttpService);
+  productService = inject(ProductService);
+  cdr = inject(ChangeDetectorRef)
 
   ngOnInit(){
-    this.httpService.getAllProduct().subscribe(result => {
+    this.productService.getAllProduct().subscribe(result => {
       this.productList = result;
-      console.log(result);
     });
   }
 
-  edit(code:string){
-    this.router.navigateByUrl("/edit-product/" + code)
-    console.log(code);
+  loadProducts() {
+    this.productService.getAllProduct().subscribe(result => {
+      this.productList = result;
+      this.cdr.detectChanges();
+    });
+  }
+
+  onProductAdded() {
+    this.loadProducts();
   }
 }

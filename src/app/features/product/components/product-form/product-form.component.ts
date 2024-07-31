@@ -1,61 +1,58 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpService } from '../../../../http.service';
-import { IProduct } from '../../interfaces/product';
-import { NgIf } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { NgClass, NgIf } from '@angular/common';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { AddProductDto } from '../../interfaces/product';
+import { ProductService } from '../../services/product.service';
+import { ToastService } from '../../../../core/components/toast-success/toast-success.service';
+import { CloseModalService } from '../../../../shared/services/close-modal.service';
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, NgClass],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.css'
 })
-
 export class ProductFormComponent {
-  httpService = inject(HttpService);
-  formBuilder = inject(FormBuilder);
-  route = inject(ActivatedRoute);
-  productForm = this.formBuilder.group({
-    code:['',[Validators.required]],
-    name:['',[Validators.required]],
-    groupId:[null,[]],
-    unitId:[null,[Validators.required]],
-    salePrice:[,[Validators.required]],
-    stock:[0,[]],
-    image:['',[]],
+  @Output() productAdded = new EventEmitter<void>();
+  productService = inject(ProductService);
+  private formBuilder = inject(FormBuilder);
+  private toastService = inject(ToastService);
+  private closeModalService = inject(CloseModalService);
+  
+  protected productForm = this.formBuilder.group({
+    code: [null, [Validators.required, Validators.maxLength(14)]],
+    name: [null, [Validators.required, Validators.maxLength(255)]],
+    groupId: [null, []],
+    unitId: [null, [Validators.required]],
+    salePrice: [null, [Validators.required, Validators.min(0)]],
+    stock: [0, []],
+    image: [null, []],
   });
 
-  showToast() {
-    const toast = document.getElementById('toast-success');
-    if (toast) {
-      toast.classList.remove('hidden');
-      // Esconder o toast após alguns segundos
-      setTimeout(() => {
-        toast.classList.add('hidden');
-      }, 4000);
-    }
-  }
-  
-  productCode!:string;
-  ngOnInit(){
-    this.productCode = this.route.snapshot.params['code'];
+  closeProductFormModal() {
+    this.closeModalService.closeModal('product-form-modal');
   }
 
-  save(){
-    const product : IProduct = {
+  save() {
+    if (this.productForm.invalid) {
+      return;
+    }
+    const product: AddProductDto = {
       code: this.productForm.value.code!,
       name: this.productForm.value.name!,
-      group: this.productForm.value.groupId!,
-      unit: this.productForm.value.unitId!,
+      groupId: this.productForm.value.groupId!,
+      unitId: this.productForm.value.unitId!,
       salePrice: this.productForm.value.salePrice!,
       stock: this.productForm.value.stock!,
-      image: this.productForm.value.image!
+      image: this.productForm.value.image!,
     }
-    this.httpService.createProduct(product).subscribe(() => {
+    this.productService.createProduct(product).subscribe(() => {
       this.productForm.reset();
-      this.showToast();
+      this.toastService.showSuccess();
+      this.closeProductFormModal();
+      this.productAdded.emit();
     });
   }
 }
