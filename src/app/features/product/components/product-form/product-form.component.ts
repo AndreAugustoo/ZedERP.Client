@@ -2,7 +2,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { Component, inject, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { AddProductDto } from '../../interfaces/product';
+import { AddProductDto, IGroup, IUnit } from '../../interfaces/product';
 import { ProductService } from '../../services/product.service';
 import { ToastService } from '../../../../core/components/toast-success/toast-success.service';
 import { CloseModalService } from '../../../../shared/services/close-modal.service';
@@ -16,7 +16,11 @@ import { CloseModalService } from '../../../../shared/services/close-modal.servi
 })
 export class ProductFormComponent {
   @Output() productAdded = new EventEmitter<void>();
+
+  unitList: IUnit[]=[];
+  groupList: IGroup[]=[];
   productService = inject(ProductService);
+
   private formBuilder = inject(FormBuilder);
   private toastService = inject(ToastService);
   private closeModalService = inject(CloseModalService);
@@ -33,6 +37,15 @@ export class ProductFormComponent {
 
   closeProductFormModal() {
     this.closeModalService.closeModal('product-form-modal');
+  }
+
+  ngOnInit(){
+    this.productService.getAllGroup().subscribe(result => {
+      this.groupList = result;
+    });
+    this.productService.getAllUnit().subscribe(result => {
+      this.unitList = result;
+    });
   }
 
   save() {
